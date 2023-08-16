@@ -4,13 +4,15 @@ import os
 import sys
 from decouple import config
 
+debug = config("DJANGO_DEBUG", default=False, cast=bool)
+
 
 def main():
     """Run administrative tasks."""
-    DJANGO_SETTINGS_MODULE = config(
-        "DJANGO_SETTINGS_MODULE", default="config.settings.local"
-    )
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", DJANGO_SETTINGS_MODULE)
+    if debug:
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
+    else:
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.production")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
