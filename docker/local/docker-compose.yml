@@ -1,0 +1,42 @@
+version: "3.9"
+
+volumes:
+  local_postgres_data: {}
+  pgadmin_data: {}
+
+
+services:
+  django:
+    build:
+      context: ../../
+      dockerfile: ./docker/local/django/Dockerfile
+    image: local_django:0.1.0
+    container_name: local_django
+    platform: linux/x86_64
+    depends_on:
+      - postgres
+    volumes:
+      - ../../.:/app:z
+    env_file:
+      - ./django/.env
+    ports:
+      - "8000:8000"
+    command: /start
+
+  pgadmin:
+    container_name: local_pgadmin
+    image: dpage/pgadmin4:5.5
+    restart: always
+    env_file:
+      - ./postgres/.env    # for local development only
+    ports:
+      - "8081:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin:z
+
+  postgres:
+    image: postgres:14-bullseye
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./postgres/.env

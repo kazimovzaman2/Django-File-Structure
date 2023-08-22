@@ -1,6 +1,14 @@
 from config.settings.base import *
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+DATABASES = {
+    "default": config(
+        "DATABASE_URL",
+        cast=db_url,
+    )
+}
+
+
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
 DEBUG = True
 
