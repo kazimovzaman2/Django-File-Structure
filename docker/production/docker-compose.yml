@@ -1,0 +1,19 @@
+#
+version: "3.9"
+
+volumes:
+  django_logs: {}
+
+services:
+  django:
+    build:
+      context: ../../
+      dockerfile: ./Dockerfile
+    image: production_django:0.1.0
+    container_name: production_django
+    platform: linux/x86_64
+    command: /start
+    env_file:
+      - ./.env
+    ports:
+      - "80:8000"
