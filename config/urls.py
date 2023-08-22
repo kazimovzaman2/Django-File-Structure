@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import TokenBlacklistView
 
 
 urlpatterns = [
-    path(settings.ADMIN_URL, admin.site.urls),
+    path("api/check_health/", include("apps.check_health.urls")),
     path(
         "api/jwt/blacklist/",
         TokenBlacklistView.as_view(),
@@ -19,7 +19,6 @@ urlpatterns = [
     ),
     # DRF Spectacular UIs:
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    # DRF Spectacular UIs:
     path(
         "api/schema/swagger-ui/",
         SpectacularSwaggerView.as_view(url_name="schema"),
@@ -34,6 +33,8 @@ urlpatterns = [
     path("api/auth/", include("rest_framework.urls")),
     path("api/auth/", include("djoser.urls")),
     path("api/auth/", include("djoser.urls.authtoken")),
+    # Admin:
+    path(settings.ADMIN_URL, admin.site.urls),
 ]
 
 if settings.DEBUG:
