@@ -27,6 +27,7 @@ COPY requirements.txt ${APP_HOME}
 
 # Install python deps via requirements
 RUN pip install -r requirements.txt
+RUN pip install --upgrade pip
 
 # Copy start script and make it executable
 COPY ./docker/production/django/start /start
