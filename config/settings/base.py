@@ -224,8 +224,9 @@ LOGGING = {
 # DRF - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        # "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
         # "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
@@ -336,4 +337,28 @@ SIMPLE_JWT = {
     "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}
+
+
+# Djoser
+# ------------------------------------------------------------------------------
+# https://djoser.readthedocs.io/en/latest/
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": True,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
+    "SEND_CONFIRMATION_EMAIL": True,
+    "SET_USERNAME_RETYPE": True,
+    "SET_PASSWORD_RETYPE": True,
+    "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    "USERNAME_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": True,
+    "SERIALIZERS": {
+        "user_create": "apps.users.serializers.UserCreateSerializer",
+        "user": "apps.users.serializers.UserCreateSerializer",
+        "current_user": "apps.users.serializers.UserCreateSerializer",
+        "user_delete": "djoser.serializers.UserDeleteSerializer",
+    },
 }
