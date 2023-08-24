@@ -30,12 +30,14 @@ urlpatterns = [
         name="redoc",
     ),
     # Djooser:
-    path("api/auth/", include("rest_framework.urls")),
     path("api/auth/", include("djoser.urls")),
     path("api/auth/", include("djoser.urls.authtoken")),
     # Admin:
     path(settings.ADMIN_URL, admin.site.urls),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+urlpatterns += [
+    path("api-auth/", include("rest_framework.urls")),
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
