@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import TokenBlacklistView
 
 
 urlpatterns = [
-    path("api/check_health/", include("apps.check_health.urls")),
+    path("health/", include("apps.check_health.urls")),
     path(
         "api/jwt/blacklist/",
         TokenBlacklistView.as_view(),
@@ -36,8 +36,11 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
 ]
 
-# if settings.DEBUG:
-urlpatterns += [
-    path("api-auth/", include("rest_framework.urls")),
-]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path("api-auth/", include("rest_framework.urls")),
+        path("__debug__/", include("debug_toolbar.urls")),
+    ]
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
